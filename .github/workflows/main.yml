@@ -37,6 +37,7 @@ jobs:
       - name: Mount Windows 11 ISO
         shell: pwsh
         run: |
+          $isoPath = Join-Path (Get-Location) "windows11.iso"
           $mount = Mount-DiskImage -ImagePath "windows11.iso" -PassThru
 
       - name: Run nano11.ps1
