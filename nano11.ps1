@@ -1,6 +1,6 @@
 param(
     [string]$SourceDrive = "D",
-    [int]$InstallIndex = 1
+    [int]$InstallIndex = 4
 )
 
 if ((Get-ExecutionPolicy) -eq 'Restricted') {
@@ -552,4 +552,5 @@ Write-Host "Creation completed! Your ISO is named nano11.iso"
 Remove-Item -Path "$mainOSdrive\nano11" -Recurse -Force 
 Remove-Item -Path "$mainOSdrive\scratchdir" -Recurse -Force 
 Stop-Transcript
+
 exit
