@@ -30,9 +30,7 @@ Write-Host "Welcome to nano11 builder!"
 Write-Host "This script generates a significantly reduced Windows 11 image. However, it's not suitable for regular use due to its lack of serviceability - you can't add languages, updates, or features post-creation. nano11 is not a full Windows 11 substitute but a rapid testing or development tool, potentially useful for VM environments."
 Write-Host "Continuing automatically in silent mode..."
 
-Write-Host "Off we go..."
 Start-Sleep -Seconds 3
-Clear-Host
 
 $mainOSDrive = $env:SystemDrive
 New-Item -ItemType Directory -Force -Path "$mainOSDrive\nano11\sources" 
@@ -92,7 +90,6 @@ foreach ($package in $packagesToRemove) { $folderPath = Join-Path "$scratchDir\P
 
 Write-Host "Removing of system apps complete! Now proceeding to removal of system packages..."
 Start-Sleep -Seconds 1
-Clear-Host
 
 $scratchDir = "$($env:SystemDrive)\scratchdir"
 $packagePatterns = @(
@@ -527,7 +524,6 @@ Remove-Item -Path $bootWimPath -Force
 Remove-Item -Path $newBootWimPath -Force
 Rename-Item -Path $finalBootWimPath -NewName "boot.wim"
 
-Clear-Host
 Write-Host "Exporting final image to highly compressed ESD format..."
 & dism /Export-Image /SourceImageFile:"$mainOSdrive\nano11\sources\install.wim" /SourceIndex:1 /DestinationImageFile:"$mainOSdrive\nano11\sources\install.esd" /Compress:recovery
 Remove-Item "$mainOSdrive\nano11\sources\install.wim"  2>&1
@@ -554,5 +550,6 @@ Remove-Item -Path "$mainOSdrive\scratchdir" -Recurse -Force
 Stop-Transcript
 
 exit
+
 
 
