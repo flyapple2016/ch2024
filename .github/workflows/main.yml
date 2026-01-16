@@ -70,7 +70,12 @@ jobs:
 
           New-Item -ItemType Directory -Force -Path $dst | Out-Null
           robocopy $src $dst /E
-
+          $rc = $LASTEXITCODE
+          if ($rc -ge 8) {
+            Write-Error "Robocopy failed with code $rc"
+            exit 1
+          }
+           
       - name: Convert install.wim to install.esd
         shell: pwsh
         run: |
