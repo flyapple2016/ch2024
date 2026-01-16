@@ -38,7 +38,13 @@ jobs:
         shell: pwsh
         run: |
           $isoPath = Join-Path $env:GITHUB_WORKSPACE "windows11.iso"
-          $mount = Mount-DiskImage -ImagePath "windows11.iso" -PassThru
+
+          if (!(Test-Path $isoPath)) {
+            Write-Error "windows11.iso not found!"
+            exit 1
+          }
+
+          Mount-DiskImage -ImagePath $isoPath
 
       - name: Run nano11.ps1
         shell: pwsh
@@ -51,13 +57,14 @@ jobs:
         shell: pwsh
         run: |
           $iso = "nano11.iso"
+
           if (!(Test-Path $iso)) {
             Write-Error "nano11.iso not found!"
             exit 1
           }
 
           $mount = Mount-DiskImage -ImagePath $iso -PassThru
-          $vol = $mount | Get-Volume
+          $vol   = $mount | Get-Volume
           $drive = $vol.DriveLetter
 
           Write-Host "nano11 ISO mounted at $drive`:"
@@ -71,12 +78,13 @@ jobs:
 
           New-Item -ItemType Directory -Force -Path $dst | Out-Null
           robocopy $src $dst /E
+
           $rc = $LASTEXITCODE
           if ($rc -ge 8) {
             Write-Error "Robocopy failed with code $rc"
             exit 1
           }
-           
+
       - name: Convert install.wim to install.esd
         shell: pwsh
         run: |
