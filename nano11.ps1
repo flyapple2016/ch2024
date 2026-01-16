@@ -1,5 +1,5 @@
 param(
-    [string]$SourceDrive = "D",
+    [string]$SourceDrive = "E",
     [int]$InstallIndex = 4
 )
 
@@ -554,3 +554,4 @@ Remove-Item -Path "$mainOSdrive\scratchdir" -Recurse -Force
 Stop-Transcript
 
 exit
+
