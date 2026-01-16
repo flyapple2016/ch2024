@@ -1,0 +1,50 @@
+name: Nano11 Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Download Windows 11 ISO
+        shell: pwsh
+        run: |
+          $url = "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_zh-cn.iso"
+          $out = "windows11.iso"
+
+          Write-Host "Downloading Windows 11 ISO..."
+          Invoke-WebRequest -Uri $url -OutFile $out -UseBasicParsing
+          Write-Host "Download completed: $out"
+
+      - name: Mount ISO and print drive letter
+        shell: pwsh
+        run: |
+          $isoPath = Join-Path (Get-Location) "windows11.iso"
+
+          Write-Host "Mounting ISO: $isoPath"
+          $mount = Mount-DiskImage -ImagePath $isoPath -PassThru
+
+          $volume = $mount | Get-Volume
+          $driveLetter = $volume.DriveLetter
+
+          Write-Host "======================================="
+          Write-Host "Mounted ISO Drive Letter: $driveLetter`:"
+          Write-Host "======================================="
+
+      - name: Run nano11.ps1 with full logs
+        shell: pwsh
+        run: |
+          Write-Host "Setting execution policy for current session..."
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+
+          Write-Host "Running nano11.ps1..."
+          Write-Host "======================================="
+
+          pwsh -NoProfile -ExecutionPolicy Bypass -File ".\nano11.ps1"
+          Write-Host "======================================="
+          Write-Host "nano11.ps1 finished"
