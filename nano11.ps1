@@ -36,7 +36,7 @@ Clear-Host
 
 $mainOSDrive = $env:SystemDrive
 New-Item -ItemType Directory -Force -Path "$mainOSDrive\nano11\sources" 
-$DriveLetter = "$SourceDrive:"
+$DriveLetter = "${SourceDrive}:"
 
 if ((Test-Path "$DriveLetter\sources\boot.wim") -eq $false -or (Test-Path "$DriveLetter\sources\install.wim") -eq $false) {
     if ((Test-Path "$DriveLetter\sources\install.esd") -eq $true) {
@@ -554,4 +554,5 @@ Remove-Item -Path "$mainOSdrive\scratchdir" -Recurse -Force
 Stop-Transcript
 
 exit
+
 
