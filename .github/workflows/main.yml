@@ -56,7 +56,7 @@ jobs:
       - name: Mount nano11 ISO
         shell: pwsh
         run: |
-          $iso = "nano11.iso"
+          $iso = Join-Path $env:GITHUB_WORKSPACE "nano11.iso"
 
           if (!(Test-Path $iso)) {
             Write-Error "nano11.iso not found!"
