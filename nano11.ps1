@@ -27,9 +27,6 @@ if (! $myWindowsPrincipal.IsInRole($adminRole))
 Start-Transcript -Path "$PSScriptRoot\nano11.log" 
 # Ask the user for input
 Write-Host "Welcome to nano11 builder!"
-Write-Host "This script generates a significantly reduced Windows 11 image. However, it's not suitable for regular use due to its lack of serviceability - you can't add languages, updates, or features post-creation. nano11 is not a full Windows 11 substitute but a rapid testing or development tool, potentially useful for VM environments."
-Write-Host "Continuing automatically in silent mode..."
-
 Start-Sleep -Seconds 3
 
 $mainOSDrive = $env:SystemDrive
@@ -296,7 +293,6 @@ foreach ($dir in $dirsToCopy) {
         }
     }  
 
-
 Write-Host "Deleting WinSxS. This may take a while..."
         Remove-Item -Path $mainOSDrive\scratchdir\Windows\WinSxS -Recurse -Force
 
@@ -550,6 +546,3 @@ Remove-Item -Path "$mainOSdrive\scratchdir" -Recurse -Force
 Stop-Transcript
 
 exit
-
-
-
