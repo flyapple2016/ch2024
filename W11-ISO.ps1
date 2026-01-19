@@ -32,10 +32,24 @@ $SevenZip = "7z.exe"
 & $SevenZip x $DecrypterFile -y | Out-Null
 
 $filePath = ".\decrypt.cmd"
-$content = Get-Content -Path $filePath -Raw
-$content = $content -replace 'set AutoStart=0', 'set AutoStart=1'
-$content = $content -replace 'set MultiChoice=1', 'set MultiChoice=0'
-Set-Content -Path $filePath -Value $content -Encoding ASCII
+
+if (Test-Path "decrypt.cmd") {
+    $content = Get-Content "decrypt.cmd"
+    $newContent = $content -replace '^set AutoStart=0$', 'set AutoStart=1'
+    $newContent | Set-Content "decrypt.cmd" -Encoding Default
+    Write-Host "✅ decrypt.cmd: AutoStart 已设为 1" -ForegroundColor Green
+} else {
+    Write-Warning "⚠️ decrypt.cmd 不存在，跳过修改"
+}
+
+if (Test-Path "DecryptConfig.ini") {
+    $content = Get-Content "DecryptConfig.ini"
+    $newContent = $content -replace '^(AutoStart\s*=\s*)0$', '$11'
+    $newContent | Set-Content "DecryptConfig.ini" -Encoding UTF8
+    Write-Host "✅ DecryptConfig.ini: AutoStart 已设为 1" -ForegroundColor Green
+} else {
+    Write-Warning "⚠️ DecryptConfig.ini 不存在，跳过修改"
+}
 
 cmd /c "`"$pwd\$filePath`" `"$pwd\$ESDFile`""
 
