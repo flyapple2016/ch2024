@@ -34,6 +34,7 @@ $SevenZip = "7z.exe"
 $DecryptCmd = "decrypt.cmd"
 $Content = Get-Content $DecryptCmd
 $NewContent = $Content -replace '^set AutoStart=0$', 'set AutoStart=1'
+$NewContent = $Content -replace '^MultiChoice=1$', 'MultiChoice=0'
 $NewContent | Set-Content $DecryptCmd -Encoding ASCII
 
 cmd /c "`"$pwd\$DecryptCmd`" `"$pwd\$ESDFile`""
