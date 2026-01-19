@@ -14,11 +14,11 @@ jobs:
         run: |
           choco install aria2 7zip -y
           
-      - name: Download Windows 11 ISO
+      - name: Run W11-ISO.ps1
         shell: pwsh
         run: |
-          $url = "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_zh-cn.iso"
-          aria2c -x16 -s16 -k1M -c --file-allocation=trunc --summary-interval=1 --console-log-level=notice --show-console-readout=true -o windows11.iso $url
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          pwsh -NoProfile -ExecutionPolicy Bypass -File ".\W11-ISO.ps1"
             
       - name: Mount Windows 11 ISO
         shell: pwsh
@@ -30,7 +30,6 @@ jobs:
         shell: pwsh
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
-          Write-Host "Running nano11.ps1..."
           pwsh -NoProfile -ExecutionPolicy Bypass -File ".\nano11.ps1"
           
       - name: Split nano11.iso
