@@ -1,6 +1,6 @@
 param(
     [string]$SourceDrive = "E",
-    [int]$InstallIndex = 4
+    [int]$InstallIndex = 3
 )
 
 if ((Get-ExecutionPolicy) -eq 'Restricted') {
@@ -546,3 +546,4 @@ Remove-Item -Path "$mainOSdrive\scratchdir" -Recurse -Force
 Stop-Transcript
 
 exit
+
