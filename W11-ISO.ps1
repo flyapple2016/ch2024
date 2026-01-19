@@ -32,11 +32,17 @@ $SevenZip = "7z.exe"
 & $SevenZip x $DecrypterFile -y | Out-Null
 
 $DecryptCmd = "decrypt.cmd"
-$Content = Get-Content $DecryptCmd
-$NewContent = $Content `
-    -replace '^set AutoStart=0$', 'set AutoStart=1' `
-    -replace '^set MultiChoice=1$', 'set MultiChoice=0'
-$NewContent | Set-Content $DecryptCmd -Encoding ASCII
+$Lines = Get-Content $DecryptCmd
+$NewLines = foreach ($line in $Lines) {
+    if ($line -match '^set AutoStart=\d+$') {
+        'set AutoStart=1'
+    } elseif ($line -match '^set MultiChoice=\d+$') {
+        'set MultiChoice=0'
+    } else {
+        $line
+    }
+}
+$NewLines | Set-Content $DecryptCmd -Encoding Default
 
 cmd /c "`"$pwd\$DecryptCmd`" `"$pwd\$ESDFile`""
 
