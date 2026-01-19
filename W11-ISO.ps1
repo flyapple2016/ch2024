@@ -40,10 +40,7 @@ if (Test-Path "decrypt.cmd") {
 }
 
 if (Test-Path "DecryptConfig.ini") {
-    $content = Get-Content "DecryptConfig.ini"
-    $newContent = $content -replace '^(AutoStart\s*=\s*)0$', '$11'
-    $newContent | Set-Content "DecryptConfig.ini" -Encoding UTF8
-} else {
+    Remove-Item "DecryptConfig.ini" -Force
 }
 Start-Sleep -Seconds 5
 
