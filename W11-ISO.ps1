@@ -37,7 +37,7 @@ $content = $content -replace 'set AutoStart=0', 'set AutoStart=1'
 $content = $content -replace 'set MultiChoice=1', 'set MultiChoice=0'
 Set-Content -Path $filePath -Value $content -Encoding ASCII
 
-cmd /c "`"$pwd\$DecryptCmd`" `"$pwd\$ESDFile`""
+cmd /c "`"$pwd\$filePath`" `"$pwd\$ESDFile`""
 
 $GeneratedISO = Get-ChildItem -Path . -Filter "*.iso" -File | 
                 Where-Object { $_.Name -like "*CLIENTBUSINESS_VOL*x64FRE*zh-cn.iso" } |
