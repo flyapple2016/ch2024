@@ -1,7 +1,7 @@
 # $url = "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_zh-cn.iso"
 # aria2c -x16 -s16 -k1M -c --file-allocation=trunc --summary-interval=1 --console-log-level=notice --show-console-readout=true -o windows11.iso $url
 
-$ESDUrl = "http://dl.delivery.mp.microsoft.com/filestreamingservice/files/5c395b9e-cda3-4e1a-83f0-20a922248656/26200.7623.260109-1650.25h2_ge_release_svc_refresh_CLIENTBUSINESS_VOL_x64FRE_zh-cn.esd"
+$ESDUrl = "http://dl.delivery.mp.microsoft.com/filestreamingservice/files/fb4c3a5c-4992-47b2-89d1-b99c9a2f09db/26200.7840.260206-2233.25h2_ge_release_svc_refresh_CLIENTBUSINESS_VOL_x64FRE_zh-cn.esd"
 $ESDFile = "windows11.esd"
 aria2c -x16 -s16 -k1M -c --file-allocation=trunc --summary-interval=1 --console-log-level=notice --show-console-readout=true -o $ESDFile $ESDUrl
 
